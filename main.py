@@ -17,7 +17,7 @@ def main():
     clock = pygame.time.Clock()
     running = True
 
-    ghost = Ghost(64, 64, PIXEL_SIZE, tick, GRID_SIZE) 
+    ghost = Ghost(64, 64, PIXEL_SIZE, tick, GRID_SIZE)
     
     player = Player(32, 32, PIXEL_SIZE, tick, GRID_SIZE)
 
@@ -39,16 +39,16 @@ def main():
         
         screen.fill(COLORS['black'])
 
+        base_map.draw(screen, camera)
+        
         keys = pygame.key.get_pressed()
         player.move(keys)
                 
         ghost.move()
-        camera.update(player)
+        camera.follow_target(player)
 
-        base_map.draw(screen, camera)
-
-        ghost_pos = camera.apply(ghost)
-        player_pos = camera.apply(player)
+        ghost_pos = camera.screen_coords_to_world_coords(ghost)
+        player_pos = camera.screen_coords_to_world_coords(player)
 
         draw_entity(screen, ghost, ghost_pos, COLORS)
         draw_entity(screen, player, player_pos, COLORS)

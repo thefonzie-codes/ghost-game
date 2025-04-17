@@ -58,7 +58,7 @@ def main():
                 pygame.quit()
                 sys.exit()
 
-        pygame.display.flip()  # Update the display
+        pygame.display.flip()  
 
 
 def draw_entity(screen, entity, position, colors):

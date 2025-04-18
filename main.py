@@ -6,6 +6,7 @@ from system.camera import Camera
 from constants import *
 from system.map import Map
 from textures.base_floor import BaseFloor
+import random
 
 def main():
     pygame.init()
@@ -17,7 +18,12 @@ def main():
     clock = pygame.time.Clock()
     running = True
 
-    ghost = Ghost(64, 64, PIXEL_SIZE, tick, GRID_SIZE)
+    number_of_ghosts = 4
+    ghosts = []
+    for i in range(number_of_ghosts):
+        x = random.randint(0, MAX_MAP_WIDTH - 64)
+        y = random.randint(0, MAX_MAP_HEIGHT - 64)
+        ghosts.append(Ghost(x, y, PIXEL_SIZE, tick, GRID_SIZE))
     
     player = Player(32, 32, PIXEL_SIZE, tick, GRID_SIZE)
 
@@ -33,8 +39,8 @@ def main():
             tick = 0
         else:
             tick += 1
-            
-        ghost.tick = tick
+        
+        
         player.tick = tick
         
         screen.fill(COLORS['black'])
@@ -43,14 +49,18 @@ def main():
         
         keys = pygame.key.get_pressed()
         player.move(keys)
-                
-        ghost.move()
+
+        for ghost in ghosts:
+            ghost.tick = tick  
+            ghost.move()
+            ghost_pos = camera.world_coords_to_screen_coords(ghost)
         camera.follow_target(player)
 
-        ghost_pos = camera.world_coords_to_screen_coords(ghost)
         player_pos = camera.world_coords_to_screen_coords(player)
 
-        draw_entity(screen, ghost, ghost_pos, COLORS)
+        for ghost in ghosts:
+            draw_entity(screen, ghost, ghost_pos, COLORS)
+        
         draw_entity(screen, player, player_pos, COLORS)
 
         for event in pygame.event.get():

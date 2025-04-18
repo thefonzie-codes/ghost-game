@@ -14,5 +14,5 @@ class Camera:
         self.offset_x = target_center_x - (self.width // (2 * target.pixel_size))
         self.offset_y = target_center_y - (self.height // (2 * target.pixel_size))
     
-    def screen_coords_to_world_coords(self, target):
+    def world_coords_to_screen_coords(self, target):
         return (target.x - self.offset_x, target.y - self.offset_y)

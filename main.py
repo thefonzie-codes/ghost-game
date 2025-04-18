@@ -47,8 +47,8 @@ def main():
         ghost.move()
         camera.follow_target(player)
 
-        ghost_pos = camera.screen_coords_to_world_coords(ghost)
-        player_pos = camera.screen_coords_to_world_coords(player)
+        ghost_pos = camera.world_coords_to_screen_coords(ghost)
+        player_pos = camera.world_coords_to_screen_coords(player)
 
         draw_entity(screen, ghost, ghost_pos, COLORS)
         draw_entity(screen, player, player_pos, COLORS)
